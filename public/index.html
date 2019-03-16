@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>yuyu</title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but yuyu doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+  <script type="application/javascript">
+		
+		$(".div").text("服务器未响应或未连接服务器 \n 无资源");
+			var file = $('#file'),
+			aim = $('#url');
+		file.on('change', function(e) {
+			//e.currentTarget.files 是一个数组，如果支持多个文件，则需要遍历
+			var name = e.currentTarget.files[0].name;
+			aim.text(name);
+		});
+
+
+		function postData() {
+			var formData = new FormData();
+			formData.append("file", $("#file")[0].files[0]);
+			formData.append("restitle",$("#restitle").val());
+			formData.append("service", 'App.Passion.UploadFile');
+			formData.append("token", token);
+			$.ajax({
+				url: 'http://stupidfish.ticp.net',
+				/*接口域名地址*/
+				type: 'post',
+				data: formData,
+				contentType: false,
+				processData: false,
+				success: function(res) {
+					console.log(res.data);
+					if(res.data["code"] == "succ") {
+						alert('上传成功');
+					} else if(res.data["code"] == "err") {
+						alert('emmm上传失败');
+					} else {
+						console.log(res);
+					}
+				}
+			})
+		}
+</script>
+</html>
