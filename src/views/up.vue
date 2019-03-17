@@ -14,29 +14,28 @@
 
 	</div>
 </template>
-
+<script type="text/javascript" src="../assets/js/jquery-2.1.0.js" ></script>
 <script>
+		
+	
+	
+	
 	import headTop from '@/components/headTop.vue'
 	import endLine from '@/components/endLine.vue'
 	export default {
 		name: 'up',
 		components: {
 			headTop,
-			endLine
+			endLine 
 		}
-	}
-	var file = $('#file'),
-		aim = $('#url');
-	file.on('change', function(e) {
-		//e.currentTarget.files 是一个数组，如果支持多个文件，则需要遍历
-		var name = e.currentTarget.files[0].name;
-		aim.text(name);
-	});
+	}  
+	
+	
 </script>
 <style type="text/css">
 	.submitres {
 		position: absolute;
-		background: initial;
+		background: initial; 
 		color: #FFFFFF;
 		font-size: 30px;
 		left:0px;
