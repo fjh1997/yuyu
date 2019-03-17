@@ -5,7 +5,7 @@
 		<headTop></headTop>
 		<div class="upmain" onclick="">
 			<form id="_uploadForm" enctype="multipart/form-data">
-				<input id="file" v-on:change="success()"  type="file" accept=".zip" />
+				<input id="file" v-on:change="success()" type="file" accept=".zip" />
 				<textarea class="restitle" placeholder="输入一下简介叭" maxlength="233"></textarea>
 				<select class="resclass">
 					<option value="0">PVP</option>
@@ -39,7 +39,7 @@ export default {
 	mounted() {
 		$('.restitle').hide();
 		$('.submitres').hide();
-
+		$('.resclass').hide();
 		//这里写初始化的Jquery，只渲染一次
 		var file = $('#file'),
 			aim = $('#url');
@@ -53,6 +53,7 @@ export default {
 			$('.restitle').css('width', '40%');
 			$('.restitle').css('height', '50%');
 			$('.restitle').css('height', '50%');
+			$('.resclass').show();
 			$('.restitle').show();
 			$('.submitres').show();
 		});
@@ -61,29 +62,68 @@ export default {
 		//方法都写到这里
 		success: function(event) {},
 
-		postData: function() {
-			var formData = new FormData();
-			formData.append('file', $('#file')[0].files[0]);
-			formData.append('restitle', $('#restitle').val());
-			formData.append('service', 'App.Passion.UploadFile');
-			//formData.append('token', token);
-			$.ajax({
-				url: '/upload',
-				/*接口域名地址*/
-				type: 'post',
-				data: formData,
-				contentType: false,
-				processData: false,
-				success: function(res) {
-					console.log(res.data);
-					if (res.data['code'] == 'succ') {
-						alert('上传成功');
-					} else if (res.data['code'] == 'err') {
-						alert('emmm上传失败');
-					} else {
-						console.log(res);
-					}
+		postData:
+		 $(function() {
+			$('.submitres').on('click', function() {
+				var file = $("#file")[0].files[0], //上传文件主体
+					name = file.name, //文件名
+					size = file.size, //总大小
+					succeed = 0; //当前上传数
+				var shardSize = 2 * 1024 * 1024, //以2MB为一个分片
+					shardCount = Math.ceil(size / shardSize); //总片数
+
+				/*生成上传分片文件顺充，通过async.eachLimit()进行同步上传
+				    attr里面是[0,1,2,3...,最后一位]
+				*/
+				var attr = [];
+				for (var i = 0; i < shardCount; ++i) {
+					attr.push(i);
 				}
+
+
+
+				async.eachLimit(attr, 1, function(item, callback) {
+					var i = item;
+					var start = i * shardSize, //当前分片开始下标
+						end = Math.min(size, start + shardSize); //结束下标
+
+					//构造一个表单，FormData是HTML5新增的
+					var form = new FormData();
+					form.append("data", file.slice(start, end)); //slice方法用于切出文件的一部分
+					form.append("name", name); //文件名字
+					form.append("total", shardCount); //总片数
+					form.append("index", i + 1); //当前片数
+					//Ajax提交
+
+					$.ajax({
+						url: "/dafile",
+						type: "POST",
+						data: form,
+						timeout: 120 * 1000,
+						async: false, //同步
+						processData: false, //很重要，告诉jquery不要对form进行处理
+						contentType: false, //很重要，指定为false才能形成正确的Content-Type
+						success: function(data) {
+							++succeed;
+							var data = eval('(' + data + ')');
+							/*返回code为0是成功上传，1是请继续上传*/
+							if (data.code == 0) {
+								console.log(data.msg);
+							} else if (data.code == 1) {
+								console.log(data.msg);
+							}
+							//生成当前进度百分比
+							var jd = Math.round(succeed / shardCount * 100) + '%';
+							$('#url').html(jd);
+							/*如果是线上，去掉定时，直接callback()，
+							这样写是为方便，本地测试看到进度条变化
+							因为本地做上传测试是秒传，没有时间等待*/
+							setTimeout(callback, 50);
+						}
+					});
+				}, function(err) {
+					$('#url').html("上传成功");
+				});
 			});
 		}
 	}
@@ -93,13 +133,13 @@ export default {
 .resclass {
 	border-top: 8px solid #2b81af;
 	position: absolute;
-	top:160px;
-	left:800px;
-	color:#2b81af ;
+	top: 160px;
+	left: 800px;
+	color: #2b81af;
 	font-size: 25px;
-	width:200px
+	width: 200px;
 }
-.resclass:hover{
+.resclass:hover {
 	border: 2px solid #2b81af;
 }
 .restitle {
