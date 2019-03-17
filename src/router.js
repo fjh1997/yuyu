@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 import up from './views/up.vue'
 import newone from './views/newone.vue'
 import index from './views/index.vue'
