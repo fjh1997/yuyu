@@ -1,5 +1,10 @@
 <template>
 	<div>
+		<!-- 我疯了，到底咋回事
+		 加了:id="" 元素就会消失
+		 加了js部分，整个页面除了背景全消失
+		 你看看咋回事
+		 -->
 		<headTop></headTop>
 		<div class="upmain" onclick="uploade()">
 			<form id="_uploadForm" enctype="multipart/form-data"><input id="file" type="file" accept=".zip" />
