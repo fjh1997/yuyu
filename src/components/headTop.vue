@@ -26,7 +26,7 @@
 			</div>
 		</div>
 		
-		<endLine></endLine>
+		
 	</body>
 </div>
 </template>

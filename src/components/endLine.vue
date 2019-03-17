@@ -3,10 +3,10 @@
 			<p>Copyright © 2019 - 2025;All Rights Reserved Stupidfish</p>
 </div>
 </template>
-<script type="text/javascript">
+<script >
 	
 export default {
-  name: 'endLine'
+  name: 'endLine',
   
 }
 </script>
