@@ -127,6 +127,7 @@ export default {
 			});
 		}
 	}
+	}
 };
 </script>
 <style type="text/css">
