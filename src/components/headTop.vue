@@ -161,4 +161,5 @@
 				text-align: center;
 				border-bottom: 1px solid #202020;
 			}
+			
 		</style>

@@ -26,16 +26,16 @@
     endLine
   }
 }
+	
 	</script>
 	<style type="text/css">
 		#join:hover {
 				border-top: 7px solid rgb(3, 35, 14);
 			}
-			
+			 
 			#_uploadForm {}
-			
-			#_uploadForm:hover {
-				opacity: 0.5;
+			#file:hover{
+				opacity: 0.6;
 			}
 			
 			#file {
@@ -61,5 +61,11 @@
 			#url {
 				color: coral;
 				font-size: 30px;
+			}
+			.restitle{
+				position: absolute;
+				width: 200px;
+				height: 200px;
+				
 			}
 	</style>
