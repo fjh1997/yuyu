@@ -3,9 +3,9 @@
 		<!-- ok
 		 -->
 		<headTop></headTop>
-		<div class="upmain" onclick="uploade()">
+		<div class="upmain" onclick="">
 			<form id="_uploadForm" enctype="multipart/form-data">
-				<input id="file" v-on:change="success()" type="file" accept=".zip" />
+				<input id="file" v-on:change="success()"  type="file" accept=".zip" />
 				<textarea class="restitle" placeholder="输入一下简介叭" maxlength="233"></textarea>
 				<select class="resclass">
 					<option value="0">PVP</option>
@@ -21,7 +21,7 @@
 			<br />
 			<p id="url">点击加号上传</p>
 		</div>
-		<input type="submit" value="提交" class="submitres" />
+		<input type="submit" value="提交" class="submitres" @click="postData" />
 
 		<endLine></endLine>
 	</div>
@@ -66,9 +66,9 @@ export default {
 			formData.append('file', $('#file')[0].files[0]);
 			formData.append('restitle', $('#restitle').val());
 			formData.append('service', 'App.Passion.UploadFile');
-			formData.append('token', token);
+			//formData.append('token', token);
 			$.ajax({
-				url: 'http://stupidfish.ticp.net',
+				url: '/upload',
 				/*接口域名地址*/
 				type: 'post',
 				data: formData,

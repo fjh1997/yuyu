@@ -15,8 +15,24 @@ jQuery:"jquery",
 
 })
 
-    ]
+    ],
+    devServer: {
+    proxy: {
+    	'/upload':
+    	{
+        target: 'http://stupidfish.ticp.net',
+        ws: true,
+        changeOrigin: true
+      }
+    },
+    open:true,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': '*',
+    }
 
+  }
+    
   }
 
 	
