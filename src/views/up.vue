@@ -27,6 +27,7 @@
 	</div>
 </template>
 <script>
+/////////////////////////////注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释
 import async from 'async';
 import $ from 'jquery';
 import headTop from '@/components/headTop.vue';
