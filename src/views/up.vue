@@ -3,7 +3,9 @@
 	<headTop></headTop>
 <div class="upmain" onclick="uploade()">
 			<form id="_uploadForm" enctype="multipart/form-data"><input id="file" type="file" accept=".zip" />
-			<input type="text" id="restitle"></form>
+			<textarea class="restitle" placeholder="输入一下简介叭"></textarea>
+			<input type="radio" class="resradio"/>
+			</form>
 			<br/><br/>
 			<p id="url">点击加号上传</p>
 		</div>
