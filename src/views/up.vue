@@ -21,12 +21,13 @@
 			<br />
 			<p id="url">点击加号上传</p>
 		</div>
-		<input type="submit" value="提交" class="submitres" @click="postData" />
+		<input type="submit" value="提交" class="submitres"  />
 
 		<endLine></endLine>
 	</div>
 </template>
 <script>
+import async from 'async';
 import $ from 'jquery';
 import headTop from '@/components/headTop.vue';
 import endLine from '@/components/endLine.vue';
@@ -57,13 +58,6 @@ export default {
 			$('.restitle').show();
 			$('.submitres').show();
 		});
-	},
-	methods: {
-		//方法都写到这里
-		success: function(event) {},
-
-		postData:
-		 $(function() {
 			$('.submitres').on('click', function() {
 				var file = $("#file")[0].files[0], //上传文件主体
 					name = file.name, //文件名
@@ -96,8 +90,8 @@ export default {
 					//Ajax提交
 
 					$.ajax({
-						url: "/dafile",
-						type: "POST",
+						url: "/upload",
+						type: "post",
 						data: form,
 						timeout: 120 * 1000,
 						async: false, //同步
@@ -124,8 +118,14 @@ export default {
 				}, function(err) {
 					$('#url').html("上传成功");
 				});
-			});
-		}
+				});
+	},
+	methods: {
+		//方法都写到这里
+		success: function(event) {},
+
+				
+		
 	}
 	}
 };
@@ -137,7 +137,7 @@ export default {
 	top: 160px;
 	left: 800px;
 	color: #2b81af;
-	font-size: 25px;
+		font-size: 25px;
 	width: 200px;
 }
 .resclass:hover {
