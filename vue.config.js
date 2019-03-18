@@ -23,6 +23,12 @@ jQuery:"jquery",
         target: 'http://stupidfish.ticp.net',
         ws: true,
         changeOrigin: true
+      },
+      '/download':
+      {
+        target: 'http://stupidfish.ticp.net',
+        ws: true,
+        changeOrigin: true
       }
     },
     open:true,
