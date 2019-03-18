@@ -22,21 +22,45 @@
 			<p id="url">点击加号上传</p>
 		</div>
 		<input type="submit" value="提交" class="submitres"  />
-
+ <uploader :options="options" class="uploader-example">
+    <uploader-unsupport></uploader-unsupport>
+    <uploader-drop>
+      <p>Drop files here to upload or</p>
+      <uploader-btn>select files</uploader-btn>
+      <uploader-btn :attrs="attrs">select images</uploader-btn>
+      <uploader-btn :directory="true">select folder</uploader-btn>
+    </uploader-drop>
+    <uploader-list></uploader-list>
+  </uploader>
 		<endLine></endLine>
 	</div>
 </template>
 <script>
 /////////////////////////////注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释
-import async from 'async';
-import $ from 'jquery';
+
+
 import headTop from '@/components/headTop.vue';
 import endLine from '@/components/endLine.vue';
+
 export default {
+
+	data () {
+      return {
+        options: {
+          // https://github.com/simple-uploader/Uploader/tree/develop/samples/Node.js
+          target: '/upload',
+          testChunks: false
+        },
+        attrs: {
+          accept: 'image/*'
+        }
+      }
+    },
 	name: 'up',
 	components: {
 		headTop,
 		endLine
+		
 	},
 	mounted() {
 		$('.restitle').hide();
@@ -59,71 +83,11 @@ export default {
 			$('.restitle').show();
 			$('.submitres').show();
 		});
-			$('.submitres').on('click', function() {
-				var file = $("#file")[0].files[0], //上传文件主体
-					name = file.name, //文件名
-					size = file.size, //总大小
-					succeed = 0; //当前上传数
-				var shardSize = 2 * 1024 * 1024, //以2MB为一个分片
-					shardCount = Math.ceil(size / shardSize); //总片数
-
-				/*生成上传分片文件顺充，通过async.eachLimit()进行同步上传
-				    attr里面是[0,1,2,3...,最后一位]
-				*/
-				var attr = [];
-				for (var i = 0; i < shardCount; ++i) {
-					attr.push(i);
-				}
-
-
-
-				async.eachLimit(attr, 1, function(item, callback) {
-					var i = item;
-					var start = i * shardSize, //当前分片开始下标
-						end = Math.min(size, start + shardSize); //结束下标
-
-					//构造一个表单，FormData是HTML5新增的
-					var form = new FormData();
-					form.append("data", file.slice(start, end)); //slice方法用于切出文件的一部分
-					form.append("name", name); //文件名字
-					form.append("total", shardCount); //总片数
-					form.append("index", i + 1); //当前片数
-					//Ajax提交
-
-					$.ajax({
-						url: "/upload",
-						type: "post",
-						data: form,
-						timeout: 120 * 1000,
-						async: false, //同步
-						processData: false, //很重要，告诉jquery不要对form进行处理
-						contentType: false, //很重要，指定为false才能形成正确的Content-Type
-						success: function(data) {
-							++succeed;
-							var data = eval('(' + data + ')');
-							/*返回code为0是成功上传，1是请继续上传*/
-							if (data.code == 0) {
-								console.log(data.msg);
-							} else if (data.code == 1) {
-								console.log(data.msg);
-							}
-							//生成当前进度百分比
-							var jd = Math.round(succeed / shardCount * 100) + '%';
-							$('#url').html(jd);
-							/*如果是线上，去掉定时，直接callback()，
-							这样写是为方便，本地测试看到进度条变化
-							因为本地做上传测试是秒传，没有时间等待*/
-							setTimeout(callback, 50);
-						}
-					});
-				}, function(err) {
-					$('#url').html("上传成功");
-				});
-				});
+			
 	},
 	methods: {
 		//方法都写到这里
-		success: function(event) {},
+	
 
 				
 		
@@ -207,4 +171,20 @@ export default {
 	width: 200px;
 	height: 200px;
 }
+ .uploader-example {
+    width: 880px;
+    padding: 15px;
+    margin: 40px auto 0;
+    font-size: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+  }
+  .uploader-example .uploader-btn {
+    margin-right: 4px;
+  }
+  .uploader-example .uploader-list {
+    max-height: 440px;
+    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 </style>
