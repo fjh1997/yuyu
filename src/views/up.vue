@@ -18,13 +18,14 @@
 			</form>
 			<br />
 			<br />
+			
 		</div>
 		<input type="submit" value="提交" class="submitres"  />
- <uploader :options="options" class="uploader-example">
+ <uploader :options="options" class="uploader-example" >
     <uploader-unsupport></uploader-unsupport>
-    <uploader-drop >
-      <p>将材质包<br/>拖到这里鸭</p>
-      <uploader-btn>上传</uploader-btn>
+    <uploader-drop>
+      <p>拖材质包到这里</p>
+      <uploader-btn>选择</uploader-btn>
     </uploader-drop>
     <uploader-list></uploader-list>
   </uploader>
@@ -59,17 +60,25 @@ export default {
 		
 	},
 	mounted() {
-
+		$('.restitle').hide();
+		$('.submitres').hide();
+		$('.resclass').hide();
 		//这里写初始化的Jquery，只渲染一次
-		
-
-			$('.restitle').css('top', '100px');
-			$('.restitle').css('right', '25%');
-			$('.restitle').css('width', '20%');
-			$('.restitle').css('height', '60%');
+		var file = $('#uploader-example');
+		file.on('change', function(e) {//--------------------------------------------------传输完成回调位置
+			//e.currentTarget.files 是一个数组，如果支持多个文件，则需要遍历
+			var name = e.currentTarget.files[0].name;
+			aim.text(name);
+			file.hide();
+			$('.restitle').css('top', '160px');
+			$('.restitle').css('left', '10%');
+			$('.restitle').css('width', '40%');
+			$('.restitle').css('height', '50%');
+			$('.restitle').css('height', '50%');
 			$('.resclass').show();
 			$('.restitle').show();
 			$('.submitres').show();
+		});//-------------------------------------------------------------------------对应上面的括号
 			
 	},
 	methods: {
@@ -79,14 +88,14 @@ export default {
 				
 		
 	}
-	};
+	}
 </script>
 <style type="text/css">
 .resclass {
 	border-top: 8px solid #2b81af;
 	position: absolute;
-	top: 100px;
-	right:137px;
+	top: 160px;
+	left: 800px;
 	color: #2b81af;
 		font-size: 25px;
 	width: 200px;
@@ -154,18 +163,14 @@ export default {
 
 .restitle {
 	position: absolute;
+	width: 200px;
+	height: 200px;
 }
  .uploader-example {
-	 position: absolute;
-    width: 400px;
+    width: 880px;
     padding: 15px;
     margin: 40px auto 0;
     font-size: 12px;
-	left: -155px;
-	top:15px;
-	-ms-user-select: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, .4);
   }
   .uploader-example .uploader-btn {
