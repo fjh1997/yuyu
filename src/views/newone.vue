@@ -14,7 +14,7 @@
 </div>
 </template>
 <script >
-	import $ from 'jquery'
+
 	import headTop from '@/components/headTop.vue'
 	import endLine from '@/components/endLine.vue'
 	
