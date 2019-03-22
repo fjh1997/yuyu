@@ -86,7 +86,6 @@
 				left: 0;
 				right: 0;
 				bottom: 0;
-				background-color: #D0D0D0;
 				z-index: 0;
 				opacity: 0.8;
 			}
