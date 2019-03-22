@@ -32,7 +32,7 @@
 </template>
 <script>
 
-
+	
     export default {
     	name: 'HeadTop',
     }
@@ -78,22 +78,27 @@
 			}
 			
 			.maindiv {
-				position: absolute;
+				position: page;
 				width: 95%;
 				height: 80%;
 				margin: auto;
-				top: 150px;
 				left: 0;
 				right: 0;
 				bottom: 0;
 				z-index: 0;
 				opacity: 0.8;
 			}
-			
+			.pushdatadiv{
+				position: page;
+				background-color: rgb(249,205,173);
+				width: 49%;
+				height: 400px;
+				border: 1px solid black;
+				float:left;
+			}
 			.end {
-				position: absolute;
+				position: page;
 				margin: auto;
-				left: 36%;
 				bottom: -100px;
 				-ms-user-select: none;
 				-moz-user-select: none;
