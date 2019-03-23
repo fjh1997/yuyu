@@ -1,4 +1,5 @@
 
+
 var CanvasParticle = (function(){
 	function getElementByTag(name){
 		return document.getElementsByTagName(name);
@@ -135,6 +136,7 @@ var CanvasParticle = (function(){
 	// 画线
 	function drawLine(context, canvas, mouse){
 		context = context || canvas.context;
+		var dist;
 		for(var i = 0, len = canvas.config.count; i < len; i++){
 			// 初始化最大连接数
 			canvas.points[i].max_conn = 0;
@@ -180,3 +182,5 @@ var CanvasParticle = (function(){
 	}
 	return canvasInit;
 })();
+
+export {CanvasParticle}
