@@ -5,8 +5,8 @@
 		<headTop></headTop>
 		<div class="upmain" onclick="">
 			<form id="_uploadForm" enctype="multipart/form-data">
-				<textarea class="restitle" placeholder="输入一下简介叭" maxlength="233"></textarea>
-				<select class="resclass">
+				<textarea class="restitle" placeholder="输入一下简介叭" maxlength="233" id="packtitle"></textarea>
+				<select class="resclass" id="packclass">
 					<option value="0">PVP</option>
 					<option value="1">生存</option>
 					<option value="2">高分辨率</option>
@@ -33,8 +33,23 @@
 	</div>
 </template>
 <script>
-/////////////////////////////注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释注释
-
+/////////////////////////////------------------------------------------------------------------------------------------
+var form = new FormData(document.getElementById('_uploadForm'));
+        $.ajax({
+            type: 'post',
+            url: 'http://119.23.252.93:8080/',
+            data:form,
+            processData:false,
+            contentType:false,
+            success: function (data) {
+                console.log(data);
+                alert('提交数据成功');
+                $('#packtitle').val('');
+                $('#packclass').val('');
+                $('#age').val('');//文件上传组件的文件名
+            }
+        })
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////-----
 
 import headTop from '@/components/headTop.vue';
 import endLine from '@/components/endLine.vue';
