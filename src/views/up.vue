@@ -33,23 +33,6 @@
 	</div>
 </template>
 <script>
-/////////////////////////////------------------------------------------------------------------------------------------
-var form = new FormData(document.getElementById('_uploadForm'));
-        $.ajax({
-            type: 'post',
-            url: 'http://119.23.252.93:8080/',
-            data:form,
-            processData:false,
-            contentType:false,
-            success: function (data) {
-                console.log(data);
-                alert('提交数据成功');
-                $('#packtitle').val('');
-                $('#packclass').val('');
-                $('#age').val('');//文件上传组件的文件名
-            }
-        })
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////-----
 
 import headTop from '@/components/headTop.vue';
 import endLine from '@/components/endLine.vue';
@@ -75,14 +58,16 @@ export default {
 		
 	},
 	mounted() {
+		var filEvent=this.$refs.uploader.uploader;
 		$('.restitle').hide();
 	//	$('.submitres').hide();
 		$('.resclass').hide();
 		//这里写初始化的Jquery，只渲染一次
-		var file = $('.uploader-example');
-		file.on('change', function(e) {//--------------------------------------------------传输完成回调位置
+		
+		filEvent.on('fileSuccess', function (rootFile, file, message) {
+  console.log(file.file.name);//--------------------------------------------------传输完成回调位置
 			//e.currentTarget.files 是一个数组，如果支持多个文件，则需要遍历
-			var name = e.currentTarget.files[0].name;
+			var name = file.file.name;
 			aim.text(name);
 			file.hide();
 			$('.restitle').css('top', '160px');
@@ -99,8 +84,8 @@ export default {
 	methods: {
 		//方法都写到这里
 	submit: function(event){
-
-alert(this.$refs.uploader.uploader.files[0].uniqueIdentifier)
+var fileup=this.$refs.uploader.uploader.files[0];
+alert(fileup.uniqueIdentifier)
 
 
 	}
