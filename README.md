@@ -12,7 +12,7 @@
 下载格式为
 /download:identifier
 <br>identifier就是点提交按钮后会跳出来显示的那个。
-
+<br>另外，有些前端样式和脚本并不符合VUE的规范，希望大家改一改
 
 
 ## Project setup
