@@ -70,9 +70,9 @@ export default {
 			//e.currentTarget.files 是一个数组，如果支持多个文件，则需要遍历
 			var name = file.file.name;
 			//aim.text(name);
-			console.log(isShow);
-			isShow=false;
-			console.log(isShow);
+			console.log(this.isShow);
+			this.isShow=false;
+			console.log(this.isShow);
 			$('.restitle').css('top', '160px');
 			$('.restitle').css('left', '10%');
 			$('.restitle').css('width', '40%');
