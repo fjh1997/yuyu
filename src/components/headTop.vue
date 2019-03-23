@@ -7,7 +7,7 @@
 		
 	</head>
 
-	<body>
+	<body id="mydiv">
 		<div class="top"></div>
 		<div class="top_main">
 			<div class="class_res">
@@ -31,10 +31,32 @@
 </div>
 </template>
 <script>
-
 	
+	import {canvaspice} from '../../public/js/canvas-particle.js'
     export default {
     	name: 'HeadTop',
+		methods:{
+			methods1:function(){
+				window.onload = function() {
+						    //配置
+						    var config = {
+						        vx: 2,	//小球x轴速度,正为右，负为左
+						        vy: 2,	//小球y轴速度
+						        height: 0,	//小球高宽，其实为正方形，所以不宜太大
+						        width: 0,
+						        count: 200,		//点个数
+						        color: "121, 162, 185", 	//点颜色
+						        stroke: "200,101,200", 		//线条颜色
+						        dist: 15000,  //点吸附距离
+						        e_dist: 20000, 	//鼠标吸附加速距离
+						        max_conn: 15 	//点到点最大连接数
+						    }
+				
+						    //调用
+						    CanvasParticle(config);
+				}
+			}
+		}
     }
 </script>
 
@@ -45,11 +67,8 @@
 				-moz-transition: all 0.375s;
 				transition: all 0.375s;
 			}
-			
-			body {
-				background-image: url(../assets/img/background.jpg);
-				background-repeat: no-repeat;
-				background-size: 100%;
+			body{
+				background-color: #2D2D2D;
 			}
 			
 			.top {
@@ -90,7 +109,7 @@
 			}
 			.pushdatadiv{
 				position: page;
-				background-color: rgb(249,205,173);
+				background-color:rgb(222,211,140) ;
 				width: 49%;
 				height: 400px;
 				border: 1px solid black;
