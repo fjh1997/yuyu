@@ -5,7 +5,12 @@
 		<headTop></headTop>
 		<div class="upmain" onclick="">
 			<form id="_uploadForm" enctype="multipart/form-data">
-				<textarea class="restitle" placeholder="输入一下简介叭" maxlength="233" id="packtitle"></textarea>
+				<textarea
+					class="restitle"
+					placeholder="输入一下简介叭"
+					maxlength="233"
+					id="packtitle"
+				></textarea>
 				<select class="resclass" id="packclass">
 					<option value="0">PVP</option>
 					<option value="1">生存</option>
@@ -18,99 +23,95 @@
 			</form>
 			<br />
 			<br />
-			
 		</div>
-		<input type="submit" value="提交" class="submitres"  @click="submit()"/>
- <uploader :options="options" class="uploader-example" ref="uploader"  @file-success="fileSuccess" v-show="isShow">
-    <uploader-unsupport></uploader-unsupport>
-    <uploader-drop>
-      <p>拖材质包到这里</p>
-      <uploader-btn>选择</uploader-btn>
-    </uploader-drop>
-    <uploader-list></uploader-list>
-  </uploader>
+		<input type="submit" value="提交" class="submitres" @click="submit()" />
+		<uploader
+			:options="options"
+			class="uploader-example"
+			ref="uploader"
+			@file-success="fileSuccess"
+			v-show="isShow"
+		>
+			<uploader-unsupport></uploader-unsupport>
+			<uploader-drop>
+				<p>拖材质包到这里</p>
+				<uploader-btn>选择</uploader-btn>
+			</uploader-drop>
+			<uploader-list></uploader-list>
+		</uploader>
 		<endLine></endLine>
 	</div>
 </template>
 <script>
-
 import headTop from '@/components/headTop.vue';
 import endLine from '@/components/endLine.vue';
 
 export default {
-
-	data () {
-      return {
-        options: {
-          // https://github.com/simple-uploader/Uploader/tree/develop/samples/Node.js
-          target: '/upload',
-          testChunks: false
-        },
-        attrs: {
-          accept: 'image/*'
-        },
-      isShow:true
-      }
-    },
+	data() {
+		return {
+			options: {
+				// https://github.com/simple-uploader/Uploader/tree/develop/samples/Node.js
+				target: '/upload',
+				testChunks: false
+			},
+			attrs: {
+				accept: 'image/*'
+			},
+			isShow: true
+		};
+	},
 	name: 'up',
 	components: {
 		headTop,
 		endLine
-		
 	},
 	mounted() {
-
-		
 		$('.restitle').hide();
 		$('.submitres').hide();
 		$('.resclass').hide();
 		//这里写初始化的Jquery，只渲染一次
-
-			
 	},
 	methods: {
 		//方法都写到这里
-	async submit(){
-var fileup=this.$refs.uploader.uploader.files[0];
-alert(fileup.uniqueIdentifier);
-var url='/api/pack';
-var data={
-dass:$('.resclass').val(),
-date: Date.parse(new Date()),
-title:$('.restitle').val(),
-url:fileup.uniqueIdentifier
-};
-let requestConfig = {
-			credentials: 'include',
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			mode: "cors",
-			cache: "force-cache"
-		}
-		Object.defineProperty(requestConfig, 'body', {
+		async submit() {
+			var fileup = this.$refs.uploader.uploader.files[0];
+			alert(fileup.uniqueIdentifier);
+			var url = '/api/pack';
+			var data = {
+				dass: $('.resclass').val(),
+				date: Date.parse(new Date()),
+				title: $('.restitle').val(),
+				url: fileup.uniqueIdentifier
+			};
+			let requestConfig = {
+				credentials: 'include',
+				method: 'POST',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json'
+				},
+				mode: 'cors',
+				cache: 'force-cache'
+			};
+			Object.defineProperty(requestConfig, 'body', {
 				value: JSON.stringify(data)
-			})
-		try {
-			const response = await fetch(url, requestConfig);
-			const responseJson = await response.json();
-			return responseJson
-		} catch (error) {
-			throw new Error(error)
-		}
-
-	},
-	  fileSuccess: function (rootFile, file, message) {
-  console.log(file.file.name);//--------------------------------------------------传输完成回调位置
+			});
+			try {
+				const response = await fetch(url, requestConfig);
+				const responseJson = await response.json();
+				return responseJson;
+			} catch (error) {
+				throw new Error(error);
+			}
+		},
+		fileSuccess: function(rootFile, file, message) {
+			console.log(file.file.name); //--------------------------------------------------传输完成回调位置
 			//e.currentTarget.files 是一个数组，如果支持多个文件，则需要遍历
 			var name = file.file.name;
 			//aim.text(name);
-			
-			this.isShow=false;
-			
-		
+
+			this.isShow = false;
+
 			$('.restitle').css('top', '160px');
 			$('.restitle').css('left', '10%');
 			$('.restitle').css('width', '40%');
@@ -120,11 +121,8 @@ let requestConfig = {
 			$('.restitle').show();
 			$('.submitres').show();
 		}
-
-				
-		
 	}
-	}
+};
 </script>
 <style type="text/css">
 .resclass {
@@ -133,7 +131,7 @@ let requestConfig = {
 	top: 160px;
 	left: 800px;
 	color: #2b81af;
-		font-size: 25px;
+	font-size: 25px;
 	width: 200px;
 }
 .resclass:hover {
@@ -202,20 +200,20 @@ let requestConfig = {
 	width: 200px;
 	height: 200px;
 }
- .uploader-example {
-    width: 880px;
-    padding: 15px;
-    margin: 40px auto 0;
-    font-size: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .4);
-  }
-  .uploader-example .uploader-btn {
-    margin-right: 4px;
-  }
-  .uploader-example .uploader-list {
-    max-height: 440px;
-    overflow: auto;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
+.uploader-example {
+	width: 880px;
+	padding: 15px;
+	margin: 40px auto 0;
+	font-size: 12px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+.uploader-example .uploader-btn {
+	margin-right: 4px;
+}
+.uploader-example .uploader-list {
+	max-height: 440px;
+	overflow: auto;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
 </style>
