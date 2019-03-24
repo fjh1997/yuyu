@@ -132,6 +132,10 @@ body {
   border: 1px solid black;
   float: left;
 }
+.pushdatadiv:hover{
+	  box-shadow: -10px 0px 15px #202020, /*左边阴影*/ 0px -10px 15px #202020,
+	  /*上边阴影*/ 10px 0px 15px #202020, /*右边阴影*/ 0px 10px 15px #202020;
+}
 .end {
   position: page;
   margin: auto;
