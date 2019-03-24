@@ -75,9 +75,9 @@ var fileup=this.$refs.uploader.uploader.files[0];
 alert(fileup.uniqueIdentifier);
 var url='/api/pack';
 var data={
-dass:0,
-date:1553307200,
-title:"test",
+dass:$('.resclass').val(),
+date: Date.parse(new Date()),
+title:$('.restitle').val(),
 url:fileup.uniqueIdentifier
 };
 let requestConfig = {
