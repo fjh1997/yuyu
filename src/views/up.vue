@@ -21,7 +21,7 @@
 			
 		</div>
 		<input type="submit" value="提交" class="submitres"  @click="submit()"/>
- <uploader :options="options" class="uploader-example" ref="uploader"  v-show="isShow">
+ <uploader :options="options" class="uploader-example" ref="uploader"  @file-success="fileSuccess" v-show="isShow">
     <uploader-unsupport></uploader-unsupport>
     <uploader-drop>
       <p>拖材质包到这里</p>
@@ -36,7 +36,7 @@
 
 import headTop from '@/components/headTop.vue';
 import endLine from '@/components/endLine.vue';
-	var isShow=true;
+
 export default {
 
 	data () {
@@ -49,7 +49,7 @@ export default {
         attrs: {
           accept: 'image/*'
         },
-      isShow:isShow
+      isShow:true
       }
     },
 	name: 'up',
@@ -59,20 +59,58 @@ export default {
 		
 	},
 	mounted() {
-		var filEvent=this.$refs.uploader.uploader;
+
+		
 		$('.restitle').hide();
-	//	$('.submitres').hide();
+		$('.submitres').hide();
 		$('.resclass').hide();
 		//这里写初始化的Jquery，只渲染一次
-	
-		filEvent.on('fileSuccess', function (rootFile, file, message) {
+
+			
+	},
+	methods: {
+		//方法都写到这里
+	async submit(){
+var fileup=this.$refs.uploader.uploader.files[0];
+alert(fileup.uniqueIdentifier);
+var url='/api/pack';
+var data={
+dass:$('.resclass').val(),
+date: Date.parse(new Date()),
+title:$('.restitle').val(),
+url:fileup.uniqueIdentifier
+};
+let requestConfig = {
+			credentials: 'include',
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			mode: "cors",
+			cache: "force-cache"
+		}
+		Object.defineProperty(requestConfig, 'body', {
+				value: JSON.stringify(data)
+			})
+		try {
+			const response = await fetch(url, requestConfig);
+			const responseJson = await response.json();
+			return responseJson
+		} catch (error) {
+			throw new Error(error)
+		}
+
+	},
+	  fileSuccess: function (rootFile, file, message) {
   console.log(file.file.name);//--------------------------------------------------传输完成回调位置
 			//e.currentTarget.files 是一个数组，如果支持多个文件，则需要遍历
 			var name = file.file.name;
 			//aim.text(name);
-			console.log(this.isShow);
+			
 			this.isShow=false;
-			console.log(this.isShow);
+			
+		
 			$('.restitle').css('top', '160px');
 			$('.restitle').css('left', '10%');
 			$('.restitle').css('width', '40%');
@@ -81,17 +119,7 @@ export default {
 			$('.resclass').show();
 			$('.restitle').show();
 			$('.submitres').show();
-		});//-------------------------------------------------------------------------对应上面的括号
-			
-	},
-	methods: {
-		//方法都写到这里
-	submit: function(event){
-var fileup=this.$refs.uploader.uploader.files[0];
-alert(fileup.uniqueIdentifier)
-
-
-	}
+		}
 
 				
 		

@@ -29,6 +29,12 @@ jQuery:"jquery",
         target: 'http://stupidfish.ticp.net',
         ws: true,
         changeOrigin: true
+      },
+      '/api':
+      {
+        target: 'http://stupidfish.ticp.net:6785',
+        ws: true,
+        changeOrigin: true
       }
     },
     open:true,
