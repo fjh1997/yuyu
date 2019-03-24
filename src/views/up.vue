@@ -10,6 +10,8 @@
 					placeholder="输入一下简介叭"
 					maxlength="233"
 					id="packtitle"
+					disabled="disabled"
+					maxlength="233"
 				></textarea>
 				<select class="resclass" id="packclass">
 					<option value="0">PVP</option>
