@@ -70,10 +70,36 @@ export default {
 	},
 	methods: {
 		//方法都写到这里
-	submit: function(event){
+	async submit(){
 var fileup=this.$refs.uploader.uploader.files[0];
-alert(fileup.uniqueIdentifier)
-
+alert(fileup.uniqueIdentifier);
+var url='/api/pack';
+var data={
+dass:0,
+date:1553307200,
+title:"test",
+url:fileup.uniqueIdentifier
+};
+let requestConfig = {
+			credentials: 'include',
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			mode: "cors",
+			cache: "force-cache"
+		}
+		Object.defineProperty(requestConfig, 'body', {
+				value: JSON.stringify(data)
+			})
+		try {
+			const response = await fetch(url, requestConfig);
+			const responseJson = await response.json();
+			return responseJson
+		} catch (error) {
+			throw new Error(error)
+		}
 
 	},
 	  fileSuccess: function (rootFile, file, message) {
